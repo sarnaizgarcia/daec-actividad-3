@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.4.95/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="estilos.css">
+    <title>Pedido de pizza</title>
+</head>
+<body>
+    <header class="pizza-header">
+        <div class="header-section logo">
+            <img class="pizza-logo" src="resources/logo.png" alt="pizza-delivery" />
+        </div>
+        <div class="header-section title">
+            Command your pizza
+        </div>
+    </header>
+    <form class="pizza-form">
+        <div class="text-field-set" id="field-name">
+            <label for="name" class="text-label">Name and Surname*</label>
+            <input type="text" class="text-field error" name="name" id="name">
+            <span class="text-error"></span>
+        </div>
+        <div class="text-field-set" id="field-address">
+            <label for="adress" class="text-label">Address*</label>
+            <input type="text" class="text-field error" name="address" id="address">
+            <span class="text-error"></span>
+        </div>
+        <div class="text-field-set" id="field-phone">
+            <label for="phone" class="text-label">Phone*</label>
+            <input type="text" class="text-field error" name="phone" id="phone" placeholder="Phone example: 655 253 789">
+            <span class="text-error"></span>
+        </div>
+        <div class="text-field-set" id="field-email">
+            <label for="email" class="text-label">Email*</label>
+            <input type="text" class="text-field error" name="email" id="email" placeholder="Email example: domain@mail.com">
+            <span class="text-error"></span>
+        </div>
+        <div class="options-sets">
+            <div class="option-field-set" id="field-pizza-size">
+                <div class="field-set-title">Pizza size*</div>
+                <div class="option-field">
+                    <input type="radio" class="radio-input" name="size" id="small-size" value="small">
+                    <label class="option-label">Small</label>
+                </div>
+                <div class="option-field">
+                    <input type="radio" class="radio-input" name="size" id="medium-size" value="medium">
+                    <label class="option-label">Medium</label>
+                </div>
+                <div class="option-field">
+                    <input type="radio" class="radio-input" name="size" id="big-size" value="big">
+                    <label class="option-label">Big</label>
+                </div>
+                <div class="text-error"></div>
+            </div>
+            <div class="option-field-set" id="field-pizza-ingredients">
+                <div class="field-set-title">Pizza ingredients*</div>
+                <div class="option-field">
+                    <input type="checkbox" class="check-input" name="salami" id="salami" value="salami">
+                    <label class="option-label" for="salami">Salami</label>
+                </div>
+                <div class="option-field">
+                    <input type="checkbox" class="check-input" name="mushrooms" id="mushrooms" value="mushrooms">
+                    <label class="option-label" for="mushrooms">Mushrooms</label>
+                </div>
+                <div class="option-field">
+                    <input type="checkbox" class="check-input" name="anchovies" id="anchovies" value="anchovies">
+                    <label class="option-label" for="anchovies">Anchovies</label>
+                </div>
+                <div class="option-field">
+                    <input type="checkbox" class="check-input" name="onion" id="onion" value="onion">
+                    <label class="option-label" for="onion">Onion</label>
+                </div>
+                <div class="text-error"></div>
+            </div>
+        </div>
+        <div class="buttons-set">
+            <button type="reset" class="btn secondary">Reset</button>
+            <button type="submit" disabled class="btn primary">Create command</button>
+        </div>
+    </form>
+    <div class="modal" tabindex="0">
+        <div class="bill-set">
+            <div class="bill-label">Bill:</div>
+            <div class="bill-details"></div>
+        </div>
+        <div class="buttons-set">
+            <button type="reset" class="btn secondary">I've change my mind</button>
+            <button type="submit" class="btn primary">Go on</button>
+        </div>
+    </div>
+    <script src="validarFormulario.js"></script>
+</body>
+</html>
