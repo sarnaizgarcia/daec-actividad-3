@@ -30,15 +30,27 @@ const pizzaSizesPrices = {
 }
 
 /**
- * Auxiliar functions
+ * Funciones auxiliares
  */
 
+/**
+ * Obtiene el precion según el tamaño de la pizza y le añade el precio de los ingredientes.
+ * @param {Object} formData 
+ * @returns 
+ */
 function getTotalBill(formData) {
     const basePrice = pizzaSizesPrices[formData.pizzaSize.value];
 
     return basePrice + formData.ingredients.value.length;
 }
 
+/**
+ * Crea un elemento div al que añade el texto y estilos de la línea.
+ * @param {String} description 
+ * @param {Number} price 
+ * @param {Boolean} total 
+ * @returns HTMLDivElement
+ */
 function createLine(description, price, total) {
     const BILL_LINE_CLASS = 'bill-line'
     const LINE_DESCRIPTION_CLASS = 'bill-description'
@@ -71,12 +83,15 @@ function createLine(description, price, total) {
     return billLine;
 }
 
+/**
+ * Recibe un objeto y muestra el total de la cuenta.
+ * @param {Object} formData 
+ */
 function renderBill(formData) {
     const billDetails = document.querySelector('.modal .bill-set .bill-details');
     const basePrice = pizzaSizesPrices[formData.pizzaSize.value];
 
     billDetails.appendChild(createLine(formData.pizzaSize.value, basePrice, false));
-
     for (const ingredient of formData.ingredients.value) {
         billDetails.appendChild(createLine(ingredient, 1, false));
     }
@@ -86,22 +101,22 @@ function renderBill(formData) {
 }
 
 /**
- * Validations errors 
+ * Errores de validación 
  */
 
 /**
- * Valida si un valor es un string vacío.
+ * Comprueba si un valor es un string vacío.
  * @param value 
- * @returns Nulo si el valor no está vacío y un mensaje si lo está.
+ * @returns Nulo si el valor no es un string vacío y un mensaje si lo es..
  */
 function fieldRequiredError(value) {
     return (value === '') ? 'The field is required' : null;
 }
 
 /**
- * Valida si un valor comienza con mayúsculas.
+ * Comprueba si un valor comienza con mayúsculas.
  * @param value 
- * @returns Nulo si el valor comienza con mayúsculas y un mensaje si comienza con mayúsculas.
+ * @returns Nulo si el valor comienza con mayúsculas y un mensaje si no comienza con mayúsculas.
  */
 function nameValidationFieldError(value) {
     const NAME_VALIDATION = /^[A-Z].*$/;
@@ -110,7 +125,7 @@ function nameValidationFieldError(value) {
 }
 
 /**
- * Valida si un valor tiene el formato XXX XXX XXX.
+ * Comprueba si un valor tiene el formato XXX XXX XXX.
  * @param value 
  * @returns Nulo si el valor tiene ese formato y un mensaje si no lo tiene. 
  */
@@ -132,7 +147,7 @@ function emailValidationFieldError(email) {
 }
 
 /**
- * Form validations 
+ * Validación de formulario 
  */
 
 /**
@@ -218,11 +233,12 @@ function disableSubmitButton() {
 }
 
 /**
- * Events hooks
+ * Hooks de eventos
  */
 
 /**
- * OJO!!!
+ * Pone el atributo disabled del botón de envío en función del resultado de la función
+ * disableSubmitButton.
  */
 function disableEnableSubmit() {
    document.querySelector('.pizza-form .buttons-set .btn.primary')
@@ -230,8 +246,8 @@ function disableEnableSubmit() {
 }
 
 /**
- * Crea el texto de error si el campo input del nombre no es válido y
- *  desactiva el botón de enviar formulario.    
+ * Comprueba si hay algún error de validación del nombre, lo incluye en el DOM
+ * y llama a la función que desabilita el botón de envío.    
  * @param {Event} event 
  */
 function onInputNameChange(event) {
@@ -249,8 +265,8 @@ function onInputNameChange(event) {
 }
 
 /**
- * Cuando el campo input nombre pierde el foco pone el valor de la propiedad "dirty"
- *  del campo nombre a true y llama a la función onInputNameChange.
+ * Cuando el campo input nombre pierde el foco, pone el valor de la propiedad "dirty"
+ * del campo a true y llama a la función onInputNameChange.
  * @param {Event} event 
  */
 function onInputNameBlur(event) {
@@ -258,6 +274,11 @@ function onInputNameBlur(event) {
     onInputNameChange(event);
 }
 
+/**
+ * Comprueba si hay algún error de validación de la dirección, lo incluye en el DOM
+ * y llama a la función que desabilita el botón de envío.
+ * @param {Event} event 
+ */
 function onInputAddressChange(event) {
     const errorField = document.querySelector('#field-address .text-error');
     const error = getAddressValidationError(event.target.value);
@@ -272,11 +293,21 @@ function onInputAddressChange(event) {
     disableEnableSubmit();
 }
 
+/**
+ * Cuando el campo input dirección pierde el foco, pone el valor de la propiedad "dirty"
+ * del campo a true y llama a la función onInputAddressChange.
+ * @param {Event} event 
+ */
 function onInputAddressBlur(event) {
     virtualForm.address.dirty = true;
     onInputAddressChange(event);
 }
 
+/**
+ * Comprueba si hay algún error de validación del teléfono, lo incluye en el DOM
+ * y llama a la función que desabilita el botón de envío.
+ * @param {Event} event 
+ */
 function onInputPhoneChange(event) {
     const errorField = document.querySelector('#field-phone .text-error');
     const error = getPhoneValidationError(event.target.value);
@@ -291,11 +322,21 @@ function onInputPhoneChange(event) {
     disableEnableSubmit();
 }
 
+/**
+ * Cuando el campo input teléfono pierde el foco, pone el valor de la propiedad "dirty"
+ * del campo a true y llama a la función onInputPhoneChange.
+ * @param {Event} event 
+ */
 function onInputPhoneBlur(event) {
     virtualForm.phone.dirty = true;
     onInputPhoneChange(event);
 }
 
+/**
+ * Comprueba si hay algún error de validación del email, lo incluye en el DOM
+ * y llama a la función que desabilita el botón de envío.
+ * @param {Event} event 
+ */
 function onInputEmailChange(event) {
     const errorField = document.querySelector('#field-email .text-error');
     const error = getEmailValidationError(event.target.value);
@@ -310,11 +351,22 @@ function onInputEmailChange(event) {
     disableEnableSubmit();
 }
 
+/**
+ * Cuando el campo input email pierde el foco, pone el valor de la propiedad "dirty"
+ * del campo a true y llama a la función onInputEmailChange.
+ * @param {Event} event 
+ */
 function onInputEmailBlur(event) {
     virtualForm.email.dirty = true;
     onInputEmailChange(event);
 }
 
+/**
+ * Comprueba si el elemento tiene la propiedad de checked 
+ * y si es así, lo añade a la como atributo del objeto virtualForm.
+ * Después llama a la función que deshabilita el botón de envío.
+ * @param {Event} event 
+ */
 function onInputPizzaSizeChange(event) {
     if (event.target.checked) {
         virtualForm.pizzaSize.value = event.target.value;
@@ -323,6 +375,11 @@ function onInputPizzaSizeChange(event) {
     disableEnableSubmit();
 }
 
+/**
+ * Si el elemento está checked, lo añade al array de ingredientes de virtualForm.
+ * Si hay error lo incluye en el DOM y llama a la función que deshabilita el botón de envío.
+ * @param {Evento} event 
+ */
 function onInputIngredientsChange(event) {
     const ingredient = event.target.value;
     const errorField = document.querySelector('#field-pizza-ingredients .text-error');
@@ -344,6 +401,9 @@ function onInputIngredientsChange(event) {
     disableEnableSubmit();
 }
 
+/**
+ * Retorna el objeto virtualForm a su estado inicial.
+ */
 function onResetButton() {
    for (const key in virtualForm) {
        switch(key) {
@@ -366,6 +426,11 @@ function onResetButton() {
    disableEnableSubmit();
 }
 
+/**
+ * Elimina el comportamiento por defecto del botón, crea la modal con los datos 
+ * correspondientes y añade los estilos que la muestran.
+ * @param {Evento} event 
+ */
 function onSubmitEvent(event) {
     event.preventDefault();
     const modal = document.querySelector('.modal');
@@ -380,9 +445,7 @@ function onSubmitEvent(event) {
  *  y el texto del nodo que contien los detalles del pago.
  */
 function onModalClose() {
-    const modal = document.querySelector('.modal');
-    const billDetails = modal.querySelector('.bill-details');
-    modal.classList.remove('open');
+    const modal = document.querySelector('.modal');virtualForm.name.value
     billDetails.innerHTML = '';
 }
 
@@ -410,13 +473,13 @@ const inputEmail = document.querySelector('#field-email input');
 inputEmail.addEventListener('input', onInputEmailChange);
 inputEmail.addEventListener('blur', onInputEmailBlur);
 
-// Registro del evento que se lanza para los radio buttons para comprobar cual está checked.
+// Registro del evento que se lanza para cada uno de los radio buttons y comprueba si hay alguno checked.
 const inputsPizzaSize = document.querySelectorAll('#field-pizza-size input');
 inputsPizzaSize.forEach((radioElement) => {
     radioElement.addEventListener('change', onInputPizzaSizeChange);
 });
 
-// Registro del evento que se lanza para los checkboxes para comprobar cuales están checked.
+// Registro del evento que se lanza para cada uno de los checkboxes y comprueba si hay alguno checked.
 const inputsPizzaIngredients = document.querySelectorAll('#field-pizza-ingredients input');
 inputsPizzaIngredients.forEach((checkbox) => {
     checkbox.addEventListener('change', onInputIngredientsChange);
